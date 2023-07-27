@@ -1,4 +1,4 @@
-# weatherApp
+
 <h1 align="center" id="title">WeatherApp</h1>
 
 <h2>🚀 Demo</h2>
