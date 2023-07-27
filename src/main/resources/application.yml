@@ -1,0 +1,22 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/weather
+    username: postgres
+    password: 12345
+    
+  
+
+h2:
+  console:
+    enabled: true
+
+weather-stack:
+  api-url: http://api.weatherstack.com/current
+  api-key: 640a1816fde0c3d5d87866cd2408cc62

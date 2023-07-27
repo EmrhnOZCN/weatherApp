@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <!-- Gerekli meta etiketleri -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Weather App</title>
+    <style>
+        .navbar {
+            background-color: #354152; /* Navbar arkaplan rengi */
+        }
+
+        .navbar-brand {
+            color: #fff; /* Navbar marka metni rengi */
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff; /* Navbar bağlantı metni rengi */
+        }
+
+        /* Sayfa ortasında Role bilgisi için stil */
+        .role-display {
+            position: fixed;
+           
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f9fa;
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px;
+            border: 3px solid #000;
+            border-radius: 10px;
+            z-index: 999;
+        }
+
+    </style>
+    <script>
+        // Bu fonksiyon, her saniye başında güncel zamanı alarak HTML içindeki "aktuelZaman" adlı span etiketine yazar
+        function zamanGoster() {
+            var zaman = new Date();
+            var saat = zaman.getHours();
+            var dakika = zaman.getMinutes();
+            var saniye = zaman.getSeconds();
+            var formatliZaman = saat + ":" + dakika + ":" + saniye;
+            document.getElementById("guncelZaman").innerText = formatliZaman;
+        }
+
+        // zamanGoster fonksiyonunu her saniye başında çağırmak için setInterval kullanalım
+        setInterval(zamanGoster, 1000);
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #354152;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-family: 'Helvetica Neue', sans-serif; font-size: 24px; font-weight: bold; color: #fff;">
+            Weather App
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <form action="#" th:action="@{/logout}" method="POST">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        <button type="submit" value="Logout" class="btn btn-outline-light login-button">Çıkış yap</button>
+                    </li>
+                </ul>
+            </form>
+
+            <!-- Role bilgisini burada gösterelim -->
+            <div class="text-center" sec:authorize="isAuthenticated()">
+                <div class="role-display">
+                    Role: <span sec:authentication="principal.authorities"></span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</nav>
+
+    <section class="vh-100" style="background-color: #354152;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-8 col-lg-6 col-xl-4">
+                    <div class="card mb-4" style="color: #4B515D; border-radius: 35px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex">
+                                <h6 class="flex-grow-1" th:text="${weather.cityName}"></h6>
+                                <h6>
+                                    <span id="guncelZaman">
+                                    </span>
+                                </h6>
+                            </div>
+                            <div class="d-flex flex-column text-center mt-5 mb-4">
+                                <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;">
+                                    <span th:text="${weather.temperature}"></span>°C
+                                </h6>
+                                <div>
+                                    <!-- Eğer hava durumu açıklaması varsa -->
+                                    <span th:if="${not #lists.isEmpty(weather.weatherDescriptions)}"
+                                        th:text="${weather.weatherDescriptions[0]}"></span>
+                                    <!-- Eğer hava durumu açıklaması yoksa -->
+                                    <span th:unless="${not #lists.isEmpty(weather.weatherDescriptions)}"></span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                            
+                                <div sec:authorize="hasRole('PREMIUM')" class="flex-grow-1" style="font-size: 1rem;"  >
+                                    <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span
+                                            class="ms-1">
+                                            <span th:text="${weather.windSpeed}"></span> km/s
+                                        </span>
+                                    </div>
+                                    <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span
+                                            class="ms-1">
+                                            <span th:text="${weather.humidity}"></span>%
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <!-- Eğer weatherDescriptions listesi boş değilse ve ilk öğe 'Sunny' ise -->
+                                    <div th:unless="${#lists.isEmpty(weather.weatherDescriptions)}">
+                                        <img th:src="${weather.weatherIcons[0]}" width="64px" alt="Weather Icon">
+                                    </div>
+                                    <!-- Eğer weatherDescriptions listesi boş değilse ve ilk öğe 'Sunny' değilse -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="#" th:action="@{/weather}" method="post" th:object="${weather}">
+    			<div class="input-group">
+        			<input type="text" class="form-control" name="cityName" th:field="*{cityName}" placeholder="Şehir adını girin"
+            		style="border-radius: 20px; margin-right: 5px;">
+        		<button type="submit" class="btn btn-primary" style="border-radius: 20px;">Hava Durumu Göster</button>
+    			</div>
+				</form>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

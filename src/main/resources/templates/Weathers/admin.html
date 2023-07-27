@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Bootstrap Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="admin.css">
+    
+</head>
+
+<body>
+    <div id="main">
+        <div class="head">
+            <div class="profile" >
+                <p>Emirhan Özcan <span>ADMİN</span></p>
+            </div>
+            <form action="#" th:action="@{/logout}" method="POST" >
+
+                        <button type="submit" value="Logout" class="btn btn-outline-danger login-button">Çıkış yap</button>
+                    
+                
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="col-div-3">
+            <div class="box">
+                <p><br />
+                    Kullanıcı Sayısı
+                    <span class="badge " th:text="${userCount}"></span>
+                </p>
+                <i class="fa fa-users box-icon"></i>
+            </div>
+        </div>
+        <div class="col-div-3">
+            <div class="box">
+                <p><br />Son 24 Saatte Yapılan Sorgu Sayısı: <span th:text="${queryCount}"></span></p>
+               <i class="fa fa-search box-icon"></i>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br /><br />
+        <div class="col-div-8">
+            <div class="box-8">
+                <div class="content-box">
+                    <p>Son yapılan sorgular </p>
+                    <br />
+                    <table>
+                        <tr>
+                            <th>Şehir</th>
+                            <th>Ülke</th>
+                            <th>Saat</th>
+                            <th>Sıcaklık</th>
+                            <th>Rüzgar Hızı</th>
+                            <th>Nem</th>
+                            <th>Durum</th>
+                        </tr>
+                        <tr th:each="weather : ${weather}">
+                            <td th:text="${weather.requestedCityName}"></td>
+                            <td th:text="${weather.country}"></td>
+                            <td th:text="${weather.updatedTime}"></td>
+                            <td th:text="${weather.temperature}"></td>
+                            <td th:text="${weather.windSpeed}"></td>
+                            <td th:text="${weather.humidity}"></td>
+                            <td th:text="${weather.weatherDescriptions[0]}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-div-4">
+            <div class="box-4">
+                <div class="content-box">
+                    <p>Users</p>
+                    <br />
+                    <table>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Email</th>
+                            <th>Şifre</th>
+                            <th>Action</th>
+                        </tr>
+                        <!-- Assuming 'users' is the list of users fetched from the backend -->
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.userName}"></td>
+                            <td th:text="${user.pw}"></td>
+                            <td th:text="${user.active}"></td>
+                            <td>
+                                <!-- Deletion Button -->
+                                <form th:action="@{/deleteUser}" method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                                <!-- Add action buttons here, e.g., delete button -->
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pagination justify-content-center background-color: #272c4a;">
+                        <ul class="pagination">
+                            <li class="page-item" th:unless="${currentPage == 0}">
+                                <a class="page-link" th:href="@{/showAdminPanel(page=0)}">First</a>
+                            </li>
+                            <li class="page-item" th:unless="${currentPage == 0}">
+                                <a class="page-link" th:href="@{/showAdminPanel(page=${currentPage - 1})}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}"
+                                th:class="${currentPage == page ? 'active' : 'page-item'}">
+                                <a class="page-link" th:href="@{/showAdminPanel(page=${page})}" th:text="${page + 1}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

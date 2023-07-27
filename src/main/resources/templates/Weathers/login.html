@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Gerekli meta etiketleri -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Giriş Yap</title>
+    <style>
+        body {
+            background-color: #354152;
+            color: white;
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #1E2A38;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-control {
+            background-color: #344259;
+            color: white;
+            border: none;
+        }
+        .btn-primary {
+            background-color: #FFAC1A;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Giriş Yap</h2>
+    <form th:action="@{/authenticateTheUser}" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" name="username" class="form-control" placeholder="Email adresinizi girin" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" type="password" class="form-control" placeholder="Şifrenizi girin" required>
+        </div>
+        <div class="d-grid">
+            <button type="submit" value="Login" class="btn btn-primary btn-block">Giriş Yap</button>
+        </div>
+        <hr>
+        <div th:if="${param.error}" class="alert alert-danger" id="error-message" role="alert">
+            Hatalı kullanıcı adı veya şifre
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success" id="error-message" role="alert">
+            Çıkış yaptınız
+        </div>
+        <div>
+            <p>Üyeliğiniz yoksa <a th:href="@{/register}">üyelik sayfasına</a> yönlendirileceksiniz.</p>
+        </div>
+    </form>
+
+    <!-- Bootstrap JavaScript bağımlılığı için aşağıdaki kodu ekleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-q0VB2beWt1m7M7ln8Nw5WR4A6dHxFQKj9itHrSowGW1wnX2R6ZLJGdd9BFOhL6vG"
+        crossorigin="anonymous"></script>
+        <script>
+        setTimeout(function () {
+            var errorMessage = document.getElementById("error-message");
+            if (errorMessage) {
+                errorMessage.style.display = "none";
+            }
+        }, 2000); //1500 milisaniye (1.5 saniye) sonra hata mesajını gizler
+    </script>
+    <!-- Bootstrap JavaScript bağımlılığı için aşağıdaki kodu ekleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-q0VB2beWt1m7M7ln8Nw5WR4A6dHxFQKj9itHrSowGW1wnX2R6ZLJGdd9BFOhL6vG"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

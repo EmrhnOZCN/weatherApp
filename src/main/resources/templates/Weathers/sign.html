@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Üye Kayıt Formu</title>
+    <!-- Bootstrap CSS dosyasını ekleyin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sign.css">
+    <style>
+        body {
+            background-color: #354152;
+            color: white;
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #1E2A38;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-control {
+            background-color: #344259;
+            color: white;
+            border: none;
+        }
+        .form-select {
+            background-color: #344259;
+            color: white;
+            border: none;
+        }
+        .btn-primary {
+            background-color: #FFAC1A;
+            border: none;
+        }
+        .error-message {
+            color: red;
+        }
+ .modal-card {
+    background-color: rgba(0, 0, 0, 0.7); /* Arka plan rengini değiştirme ve yarı saydam yapma */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100; /* Modal'ın diğer içeriklerin önünde kalmasını sağlama */
+}
+
+.modal-content {
+    background-color: #354152; /* Modal içeriği rengini değiştirme */
+    padding: 20px;
+    border-radius: 10px; /* Kenar yumuşatma */
+    color: white;
+    max-width: 400px;
+    width: 90%; /* Modal genişliğini ayarlama */
+    max-height: 80%; /* Modal yüksekliğini ayarlama */
+    overflow-y: auto; /* İçerik çok uzunsa kaydırma çubuğu ekleme */
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #FFAC1A; /* Kapatma düğmesi rengini değiştirme */
+}
+
+/* Modal için başlık stili */
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Modal içeriği için liste stili */
+.modal-body ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+/* Düğmeler için renk değişiklikleri */
+.btn-primary {
+    background-color: #FFAC1A;
+    border: none;
+    color: #354152;
+}
+
+.btn-primary:hover {
+    background-color: #E6A100;
+    color: #354152;
+}
+
+.btn-primary:focus {
+    box-shadow: none;
+}
+
+    </style>
+</head>
+<body>
+    <h2>Üye Kayıt Formu</h2>
+    <form th:action="@{/registerPost}" method="post">
+        <div class="mb-3">
+            <label for="email" class="form-label">E-posta:</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Şifre:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        
+        <<div class="mb-3">
+    <label for="role" class="form-label">Rol:</label>
+    <div class="form-check">
+        <input type="radio" name="role" id="free-member-option" value="ROLE_FREE" class="form-check-input" data-bs-toggle="modal" data-bs-target="#freeMemberModal" required>
+        <label class="form-check-label" for="free-member-option">Ücretsiz Üye</label>
+    </div>
+    <div class="form-check">
+        <input type="radio" name="role" id="premium-member-option" value="ROLE_PREMIUM" class="form-check-input" data-bs-toggle="modal" data-bs-target="#premiumMemberModal" required>
+        <label class="form-check-label" for="premium-member-option">Premium Üye</label>
+    </div>
+    <!-- Daha fazla seçenek ekleyebilirsiniz -->
+</div>
+      
+        <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        
+        <a type="button" class="btn btn-primary" th:href="@{/showLogin}">Vazgeç</a>
+    </form>
+
+    <!-- Ücretsiz Üye Modal -->
+    <div class="modal fade" id="freeMemberModal" tabindex="-1" role="dialog" aria-labelledby="freeMemberModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="freeMemberModalLabel">Ücretsiz Üye Özellikleri</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Özellik 1</li>
+                        <li>Özellik 2</li>
+                        <li>Özellik 3</li>
+                        <!-- Daha fazla özellik ekleyebilirsiniz -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Premium Üye Modal -->
+<div class="modal fade" id="premiumMemberModal" tabindex="-1" role="dialog" aria-labelledby="premiumMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="premiumMemberModalLabel">Premium Üye Özellikleri</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>Premium Özellik 1</li>
+                    <li>Premium Özellik 2</li>
+                    <li>Premium Özellik 3</li>
+                    <!-- Daha fazla özellik ekleyebilirsiniz -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+    <!-- Bootstrap JS dosyasını ekleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
