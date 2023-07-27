@@ -12,6 +12,6 @@ public interface IUserService {
 	
 	void addRoles(RolesEntity rolesEntity);
 	
-	List<MembersEntity> getMembersForPage(int page, int pageSize);
+
 
 }

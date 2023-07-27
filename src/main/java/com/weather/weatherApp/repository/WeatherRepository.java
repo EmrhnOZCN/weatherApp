@@ -18,7 +18,7 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity,String> {
 	//bunu yapmamızdaki sebep veri tabanında daha önce city name sorgulanmışmı eğer listle yaparsak 
 	//öğrenğin 1000 tane istanbulla ilgili sorgu varsa 1000tanesini de çekmek zorunda
 	
-	
+	//en son yapılan 4 soruguyu çekmek için
 	List<WeatherEntity> findTop4ByOrderByUpdatedTimeDesc();
 	
 	

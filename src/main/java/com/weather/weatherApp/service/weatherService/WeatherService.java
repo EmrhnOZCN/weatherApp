@@ -1,10 +1,11 @@
-package com.weather.weatherApp.service;
+package com.weather.weatherApp.service.weatherService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
+import com.weather.weatherApp.service.weatherService.IWeatherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

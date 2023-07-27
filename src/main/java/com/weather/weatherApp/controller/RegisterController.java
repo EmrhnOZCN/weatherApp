@@ -45,8 +45,7 @@ public class RegisterController {
     public String registerUser(@RequestParam String email, @RequestParam String password, @RequestParam String role) {
         MembersEntity membersEntity = new MembersEntity(email, "{noop}" + password, true);
         RolesEntity rolesEntity = new RolesEntity(email, role);
-        System.out.println(email+""+password);
-        System.out.println(email+""+role);
+
         
         
         iUserService.addMembers(membersEntity);

@@ -1,6 +1,5 @@
 package com.weather.weatherApp.security;
 
-
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -11,100 +10,74 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.weather.weatherApp.constans.CustomAuthenticationSuccessHandler;
+
 @Configuration
 public class SecurityConfig {
 	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
-    
-    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
-        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-    }
-	
-//	@Bean
-//	public InMemoryUserDetailsManager userDetailsManager()   {
-//		
-//		UserDetails john = User.builder()
-//				.username("abc@gmail.com")
-//				.password("{noop}1234")
-//				.roles("FREE")
-//				.build();
-//		//şifrenin doğrulama gerektirmemesi için {noop} ön eki kullanılır
-//		
-//		UserDetails maria = User.builder()
-//				.username("abcd@gmail.com")
-//				.password("{noop}12345")
-//				.roles("FREE","VIP")
-//				.build();
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		return new InMemoryUserDetailsManager(john,maria);
-//	}
-    
-    
-    @Bean
-	public UserDetailsManager userDetailsManager(DataSource dataSource) {
-		
-		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-		
-		 jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT user_name,pw,active FROM members WHERE user_name = ?");
-		 
-		 
-		 jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT  user_name,role FROM roles WHERE user_name = ?");
-		 
-		
-		 
-		 return  jdbcUserDetailsManager;
+	// Özel kimlik doğrulama başarı işleyiciyi enjekte eden bir yapılandırıcı
+	public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
 	}
-	
+
+	// JDBC ile kullanıcı veritabanına erişimi sağlayacak UserDetailsManager'ı yapılandırma
+	@Bean
+	public UserDetailsManager userDetailsManager(DataSource dataSource) {
+		// Veritabanı kaynaklarını kullanarak JdbcUserDetailsManager oluşturma
+		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+		// Kullanıcı adı ve şifre sorgularını belirleme
+		jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT user_name, pw, active FROM members WHERE user_name = ?");
+		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT user_name, role FROM roles WHERE user_name = ?");
+
+		return jdbcUserDetailsManager;
+	}
+
+	// Spring Security'nin HTTP güvenlik yapılandırması için bir filtre zinciri yapılandırma
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		
-		http.authorizeHttpRequests(configurer -> 
-		 configurer
-	        .requestMatchers("/weather").hasAnyRole("PREMIUM","FREE","ADMIN")
-	        .requestMatchers("/showAdminPanel").hasRole("ADMIN")
-	        .requestMatchers("/registerPost").permitAll()
-	        .requestMatchers("/register").permitAll()
-	        .requestMatchers("/signUp").permitAll()
-	        
-         
-	        .anyRequest().authenticated()
-	)
-								.formLogin(form ->
-										form
-											.loginPage("/showLogin")
-											.loginProcessingUrl("/authenticateTheUser")
-											.successHandler(customAuthenticationSuccessHandler)
-											.permitAll())
-								
-								.logout(logout -> logout.permitAll())
-								
-								
-								.exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"))
-								
-								
-								
-								
-								;	
-								
-		
-		
+		http
+				.authorizeHttpRequests(configurer ->
+						configurer
+								// "/weather" yoluna erişim için gereken rolleri belirleme
+								.requestMatchers("/weather").hasAnyRole("PREMIUM", "FREE", "ADMIN")
+								// "/showAdminPanel" yoluna erişim için "ADMIN" rolü gerekliliğini belirleme
+								.requestMatchers("/showAdminPanel").hasRole("ADMIN")
+								// "/registerPost" yoluna herkese açık (yetki gerektirmez) erişim izni verme
+								.requestMatchers("/registerPost").permitAll()
+								// "/register" yoluna herkese açık (yetki gerektirmez) erişim izni verme
+								.requestMatchers("/register").permitAll()
+								// "/signUp" yoluna herkese açık (yetki gerektirmez) erişim izni verme
+								.requestMatchers("/signUp").permitAll()
+								// Diğer tüm istekler için kimlik doğrulama gerekliliğini belirleme
+								.anyRequest().authenticated()
+				)
+				// Özel form tabanlı kimlik doğrulama yapılandırması
+				.formLogin(form ->
+						form
+								// Özel giriş sayfası olarak "/showLogin" sayfasını belirleme
+								.loginPage("/showLogin")
+								// Kullanıcının kimlik bilgilerini doğrulamak için kullanılacak URL
+								.loginProcessingUrl("/authenticateTheUser")
+								// Kimlik doğrulama başarılı olduğunda çalışacak özel işleyiciyi belirleme
+								.successHandler(customAuthenticationSuccessHandler)
+								// Giriş sayfasına herkese açık (yetki gerektirmez) erişim izni verme
+								.permitAll()
+				)
+				// Çıkış işlemi yapılandırması, çıkış herkese açık (yetki gerektirmez) olacak
+				.logout(logout -> logout.permitAll())
+
+				// Erişim reddedildiğinde yönlendirilecek sayfayı belirleme
+				.exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"));
+
+		// CSRF korumasını devre dışı bırakma (bazı senaryolarda devre dışı bırakılabilir, ancak genellikle önerilmez)
+		// http.csrf().disable();
+
+		// Basit kimlik doğrulama (HTTP temel kimlik doğrulama) kullanarak istemci tarafından
+		// kullanıcı adı ve şifre ile doğrulama yapılmasını sağlama
+		// http.httpBasic(Customizer.withDefaults());
+
+		// Oluşturulan yapılandırmayı döndürme
 		return http.build();
-		
-//		//.csrf(csrf -> csrf.disable()) metodu, Cross-Site Request Forgery (CSRF) 
-//		korumasını devre dışı bırakır. CSRF saldırılarına karşı koruma sağlamak 
-//		için genellikle bu ayarın etkinleştirilmesi önerilir, ancak bazı 
-//		senaryolarda devre dışı bırakılabilir.
-		
-//		
-//		.httpBasic(Customizer.withDefaults()) metodu, basit kimlik doğrulama (HTTP temel kimlik doğrulama) kullanarak
-//		istemci tarafından kullanıcı adı ve şifre ile doğrulama yapılmasını sağlar.
 	}
 }

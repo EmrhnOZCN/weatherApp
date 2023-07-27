@@ -1,4 +1,4 @@
-package com.weather.weatherApp.service;
+package com.weather.weatherApp.service.weatherService;
 
 import java.util.List;
 

@@ -1,24 +1,15 @@
 package com.weather.weatherApp.controller;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.weather.weatherApp.dto.WeatherDto;
-import com.weather.weatherApp.model.WeatherEntity;
-import com.weather.weatherApp.service.WeatherService;
+import com.weather.weatherApp.service.weatherService.WeatherService;
 
 import org.springframework.ui.Model;
-import jakarta.validation.constraints.NotBlank;
 
 @Controller
 public class WeatherController {

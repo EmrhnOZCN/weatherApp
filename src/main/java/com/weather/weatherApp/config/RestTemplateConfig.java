@@ -6,12 +6,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
-	
-	
+
+	// RestTemplate, dış servislerle HTTP istekleri yapmak için kullanılan Spring bileşenidir.
+	// Bu metot, RestTemplate bean'ini uygulama bağlamına ekler.
 	@Bean
-	public RestTemplate getRestTemplate()
-	{
-		
+	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
 }

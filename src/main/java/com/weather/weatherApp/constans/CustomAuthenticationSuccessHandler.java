@@ -12,22 +12,25 @@ import java.io.IOException;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-	
-	@Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+        // Kimlik doğrulama başarılı olduğunda çalışacak yönlendirme işlemleri
+
+        // Kullanıcının rolüne bağlı olarak yönlendirme yapma
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PREMIUM"))) {
+            // Kullanıcının rolü "ROLE_PREMIUM" ise "/weather" yoluna yönlendir
             response.sendRedirect("/weather");
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_FREE"))) {
+            // Kullanıcının rolü "ROLE_FREE" ise "/weather" yoluna yönlendir
             response.sendRedirect("/weather");
-            
-        }else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+        } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            // Kullanıcının rolü "ROLE_ADMIN" ise "/showAdminPanel" yoluna yönlendir
             response.sendRedirect("/showAdminPanel");
-            
-        }
-	        
-        else {
+        } else {
+            // Diğer tüm durumlarda, yani uygun rol bulunamazsa ana sayfaya ("/") yönlendir
             response.sendRedirect("/");
         }
     }
-
 }

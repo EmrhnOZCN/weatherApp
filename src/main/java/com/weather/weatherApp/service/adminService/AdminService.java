@@ -18,78 +18,56 @@ import com.weather.weatherApp.repository.MembersRepository;
 import com.weather.weatherApp.repository.RolesRepository;
 import com.weather.weatherApp.repository.WeatherRepository;
 
-
-
-
 @Service
-public class AdminService  implements IAdminService{
-	
-	private WeatherRepository weatherRepository;
-	
-	private MembersRepository membersRepository;
-	
-	private RolesRepository rolesRepository;
-	
-	
+public class AdminService implements IAdminService {
 
+	private WeatherRepository weatherRepository;
+	private MembersRepository membersRepository;
+	private RolesRepository rolesRepository;
 
 	public AdminService(WeatherRepository weatherRepository, MembersRepository membersRepository,
-			RolesRepository rolesRepository) {
+						RolesRepository rolesRepository) {
 		super();
 		this.weatherRepository = weatherRepository;
 		this.membersRepository = membersRepository;
 		this.rolesRepository = rolesRepository;
 	}
 
+	// En son güncellenen 4 hava durumu kaydını getirir
 	@Override
 	public List<WeatherEntity> getAll() {
-		
-		
-		
-		
 		return weatherRepository.findTop4ByOrderByUpdatedTimeDesc();
 	}
-	
+
+	// Tüm rolleri getirir
 	@Override
 	public List<RolesEntity> getAllRoles() {
-		// TODO Auto-generated method stub
 		return rolesRepository.findAll();
 	}
-	
+
+	// Kullanıcı sayısını getirir
 	@Override
 	public long getUserCount() {
-		// TODO Auto-generated method stub
-		
-		System.out.println(membersRepository.count());
 		return membersRepository.count();
 	}
-	
+
+	// Son 24 saat içinde yapılan hava durumu sorgularının sayısını getirir
 	@Override
 	public long getQueryCount() {
-		
-		
 		LocalDateTime last24Hours = LocalDateTime.now().minusHours(24);
-		
-		System.out.println(last24Hours);
-		
 		return weatherRepository.getQueryCountSince(last24Hours);
 	}
-	
-	
+
+	// Tüm üyeleri sayfalama ile getirir
 	@Override
 	public Page<MembersEntity> getAllMembers(Pageable pageable) {
-		// TODO Auto-generated method stub
 		return membersRepository.findAll(pageable);
 	}
-	
-	
+
+	// Kullanıcıyı siler
 	@Override
 	public void deleteUser(long userId) {
-		
-		
 		membersRepository.deleteById(userId);
-		
 	}
-	
-	
+
 }
