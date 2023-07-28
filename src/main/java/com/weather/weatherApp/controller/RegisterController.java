@@ -43,13 +43,14 @@ public class RegisterController {
 	
 	@PostMapping("/registerPost")
     public String registerUser(@RequestParam String email, @RequestParam String password, @RequestParam String role) {
-        MembersEntity membersEntity = new MembersEntity(email, "{noop}" + password, true);
+
         RolesEntity rolesEntity = new RolesEntity(email, role);
+		MembersEntity membersEntity = new MembersEntity(email, "{noop}" + password, true,rolesEntity);
 
         
         
         iUserService.addMembers(membersEntity);
-        iUserService.addRoles(rolesEntity);
+
 
         // Kayıt işlemlerini gerçekleştirdikten sonra, başarılı bir sayfaya yönlendirebiliriz.
         return "Weathers/login"; // Thymeleaf template adı (kayıt başarılı sayfası)

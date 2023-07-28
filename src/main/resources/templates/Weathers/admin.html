@@ -80,6 +80,7 @@
                             <th>Email</th>
                             <th>Şifre</th>
                             <th>Action</th>
+                            <th>Role</th>
                         </tr>
                         <!-- Assuming 'users' is the list of users fetched from the backend -->
                         <tr th:each="user : ${users}">
@@ -87,6 +88,8 @@
                             <td th:text="${user.userName}"></td>
                             <td th:text="${user.pw}"></td>
                             <td th:text="${user.active}"></td>
+
+                            <td th:text="${user.rolesEntity.role}"></td>
                             <td>
                                 <!-- Deletion Button -->
                                 <form th:action="@{/deleteUser}" method="post">
@@ -110,11 +113,15 @@
                                 <a class="page-link" th:href="@{/showAdminPanel(page=${page})}" th:text="${page + 1}"></a>
                             </li>
                         </ul>
+
+
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="clearfix"></div>
+
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

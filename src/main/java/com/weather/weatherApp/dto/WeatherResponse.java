@@ -10,9 +10,9 @@ public record WeatherResponse(
 		
 		Location location,
 		
-		Current current
+		Current current,
 		
-		
+		MembersEntity membersEntity
 		
 		
 		

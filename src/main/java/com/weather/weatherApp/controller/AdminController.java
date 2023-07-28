@@ -38,6 +38,9 @@ public class AdminController {
 		// En son güncellenen 4 hava durumu kaydını getir
 		List<WeatherEntity> weather = adminService.getAll();
 
+
+		List<RolesEntity> rolesEntities = adminService.getAllRoles();
+
 		// Sayfalama için gerekli parametreleri ayarla
 		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
 		Page<MembersEntity> userPage = adminService.getAllMembers(pageable);
@@ -52,7 +55,9 @@ public class AdminController {
 		long queryCount = adminService.getQueryCount();
 
 		// Tüm rolleri al
-		List<RolesEntity> rolesEntities = adminService.getAllRoles();
+
+
+
 
 		// Model'e gerekli verileri ekle
 		model.addAttribute("weather", weather);

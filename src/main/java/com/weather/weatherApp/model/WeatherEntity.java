@@ -3,15 +3,8 @@ package com.weather.weatherApp.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 
 @Entity
@@ -22,9 +15,11 @@ public class WeatherEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	
 
-	
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private MembersEntity membersEntity;
 	private String requestedCityName;
 	
 	private String cityName;
@@ -50,8 +45,8 @@ public class WeatherEntity {
 	
 	
 	public WeatherEntity(String id, String requestedCityName, String cityName, String country, Integer temperature,
-			LocalDateTime updatedTime, String weather_descriptions, LocalDateTime responseLocalTime,
-			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
+			LocalDateTime updatedTime,  LocalDateTime responseLocalTime,
+			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity,MembersEntity membersEntity) {
 		super();
 		this.id = id;
 		this.requestedCityName = requestedCityName;
@@ -68,13 +63,13 @@ public class WeatherEntity {
 		this.windSpeed = windSpeed;
 		
 		this.humidity = humidity;
-		
-		
+
+		this.membersEntity = membersEntity;
 	}
 
 	public WeatherEntity( String requestedCityName, String cityName, String country, Integer temperature,
 			List<String> weatherDescriptions, LocalDateTime responseLocalTime,
-			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
+			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity,MembersEntity membersEntity) {
 		this.id = "";
 		this.requestedCityName = requestedCityName;
 		this.cityName = cityName;
@@ -87,6 +82,7 @@ public class WeatherEntity {
 		this.windSpeed = windSpeed;
 		
 		this.humidity= humidity;
+		this.membersEntity=membersEntity;
 	}
 
 	public WeatherEntity() {
@@ -183,14 +179,11 @@ public class WeatherEntity {
 	}
 
 
-	
-	
-	
-	 
-	
-	
-	
-	
-	
-	
+	public MembersEntity getMembersEntity() {
+		return membersEntity;
+	}
+
+	public void setMembersEntity(MembersEntity membersEntity) {
+		this.membersEntity = membersEntity;
+	}
 }

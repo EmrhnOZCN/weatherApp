@@ -1,11 +1,6 @@
 package com.weather.weatherApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="members")
@@ -21,6 +16,11 @@ public class MembersEntity {
     private String pw;
     
     private boolean active;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id")
+	private RolesEntity rolesEntity;
+
     
     
 	public MembersEntity() {
@@ -28,20 +28,22 @@ public class MembersEntity {
 	}
 
 
-	public MembersEntity(Long id, String userName, String pw, boolean active) {
+	public MembersEntity(Long id, String userName, String pw, boolean active,RolesEntity rolesEntity) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.pw = pw;
 		this.active = active;
+		this.rolesEntity=rolesEntity;
 	}
 	
-	public MembersEntity(String userName, String pw, boolean active) {
+	public MembersEntity(String userName, String pw, boolean active,RolesEntity rolesEntity) {
 		super();
 		
 		this.userName = userName;
 		this.pw = pw;
 		this.active = active;
+		this.rolesEntity=rolesEntity;
 	}
 
 
@@ -85,18 +87,11 @@ public class MembersEntity {
 	}
 
 
-	
+	public RolesEntity getRolesEntity() {
+		return rolesEntity;
+	}
 
-
-	
-
-	
-
-	
-
-	
-	
-	
-	
-	
+	public void setRolesEntity(RolesEntity rolesEntity) {
+		this.rolesEntity = rolesEntity;
+	}
 }

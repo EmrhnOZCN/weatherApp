@@ -27,11 +27,7 @@ public class UserService implements IUserService {
 		membersRepository.save(membersEntity);
 	}
 
-	// Yeni bir rol ekler
-	@Override
-	public void addRoles(RolesEntity rolesEntity) {
-		rolesRepository.save(rolesEntity);
-	}
+
 
 
 

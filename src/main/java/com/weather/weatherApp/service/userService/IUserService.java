@@ -10,7 +10,7 @@ public interface IUserService {
 	
 	void addMembers(MembersEntity membersEntity);
 	
-	void addRoles(RolesEntity rolesEntity);
+
 	
 
 
