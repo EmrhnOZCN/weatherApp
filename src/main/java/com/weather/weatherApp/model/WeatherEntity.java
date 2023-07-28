@@ -17,9 +17,7 @@ public class WeatherEntity {
 	private String id;
 
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private MembersEntity membersEntity;
+
 	private String requestedCityName;
 	
 	private String cityName;
@@ -45,8 +43,8 @@ public class WeatherEntity {
 	
 	
 	public WeatherEntity(String id, String requestedCityName, String cityName, String country, Integer temperature,
-			LocalDateTime updatedTime,  LocalDateTime responseLocalTime,
-			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity,MembersEntity membersEntity) {
+			LocalDateTime updatedTime, String weather_descriptions, LocalDateTime responseLocalTime,
+			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
 		super();
 		this.id = id;
 		this.requestedCityName = requestedCityName;
@@ -64,12 +62,12 @@ public class WeatherEntity {
 		
 		this.humidity = humidity;
 
-		this.membersEntity = membersEntity;
+
 	}
 
 	public WeatherEntity( String requestedCityName, String cityName, String country, Integer temperature,
 			List<String> weatherDescriptions, LocalDateTime responseLocalTime,
-			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity,MembersEntity membersEntity) {
+			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
 		this.id = "";
 		this.requestedCityName = requestedCityName;
 		this.cityName = cityName;
@@ -82,7 +80,6 @@ public class WeatherEntity {
 		this.windSpeed = windSpeed;
 		
 		this.humidity= humidity;
-		this.membersEntity=membersEntity;
 	}
 
 	public WeatherEntity() {
@@ -179,11 +176,14 @@ public class WeatherEntity {
 	}
 
 
-	public MembersEntity getMembersEntity() {
-		return membersEntity;
-	}
 
-	public void setMembersEntity(MembersEntity membersEntity) {
-		this.membersEntity = membersEntity;
-	}
+
+
+
+
+
+
+
+
+
 }

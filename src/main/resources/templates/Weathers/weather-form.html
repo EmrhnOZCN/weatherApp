@@ -144,6 +144,7 @@
                         </div>
                     </div>
                     <form action="#" th:action="@{/weather}" method="post" th:object="${weather}">
+                        <input type="hidden" name="userName" th:value="${#authentication.principal.username}">
     			<div class="input-group">
         			<input type="text" class="form-control" name="cityName" th:field="*{cityName}" placeholder="Şehir adını girin"
             		style="border-radius: 20px; margin-right: 5px;">

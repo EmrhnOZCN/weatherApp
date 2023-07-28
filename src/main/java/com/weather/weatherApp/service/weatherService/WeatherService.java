@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import com.weather.weatherApp.model.MembersEntity;
 import com.weather.weatherApp.service.weatherService.IWeatherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,15 +25,9 @@ public class WeatherService implements IWeatherService {
     private RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private MembersEntity currentEntity;
-
     public WeatherService(WeatherRepository weatherRepository, RestTemplate restTemplate) {
         this.weatherRepository = weatherRepository;
         this.restTemplate = restTemplate;
-    }
-
-    public void setCurrentEntity(MembersEntity currentEntity) {
-        this.currentEntity = currentEntity;
     }
 
     // Verilen şehir adına göre hava durumu bilgisini döndüren metod
@@ -104,8 +97,8 @@ public class WeatherService implements IWeatherService {
                 LocalDateTime.now(),
                 response.current().weatherIcons(),
                 response.current().windSpeed(),
-                response.current().humidity(),
-                currentEntity
+                response.current().humidity()
+
 
 
         );
