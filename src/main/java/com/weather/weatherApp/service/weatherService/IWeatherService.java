@@ -9,13 +9,13 @@ import com.weather.weatherApp.model.WeatherEntity;
 public interface IWeatherService {
 
 	
-	WeatherDto getWeatherByCityName(String city);
+	WeatherDto getWeatherByCityName(String city,String userName);
 	
 	String getWeatherStackUrl(String city);
 	
-	WeatherEntity getWeatherFromWeatherStack(String city);
+	WeatherEntity getWeatherFromWeatherStack(String city,String userName);
 	
-	WeatherEntity saveWeatherEntity(String city,WeatherResponse response);
+	WeatherEntity saveWeatherEntity(String city,WeatherResponse response,String userName);
 	
 	
 	

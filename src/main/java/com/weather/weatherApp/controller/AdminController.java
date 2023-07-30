@@ -39,7 +39,7 @@ public class AdminController {
 		List<WeatherEntity> weather = adminService.getAll();
 
 
-		List<RolesEntity> rolesEntities = adminService.getAllRoles();
+
 
 		// Sayfalama için gerekli parametreleri ayarla
 		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
@@ -61,7 +61,7 @@ public class AdminController {
 
 		// Model'e gerekli verileri ekle
 		model.addAttribute("weather", weather);
-		model.addAttribute("rolesEntities", rolesEntities);
+
 		model.addAttribute("userCount", userCount);
 		model.addAttribute("queryCount", queryCount);
 		model.addAttribute("users", users);

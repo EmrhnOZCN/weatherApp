@@ -17,7 +17,7 @@ public class WeatherEntity {
 	private String id;
 
 
-
+	private String userName;
 	private String requestedCityName;
 	
 	private String cityName;
@@ -43,8 +43,8 @@ public class WeatherEntity {
 	
 	
 	public WeatherEntity(String id, String requestedCityName, String cityName, String country, Integer temperature,
-			LocalDateTime updatedTime, String weather_descriptions, LocalDateTime responseLocalTime,
-			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
+			LocalDateTime updatedTime,  LocalDateTime responseLocalTime,
+			List<String> weatherDescriptions,List<String> weatherIcons,Integer windSpeed,Integer humidity,String userName) {
 		super();
 		this.id = id;
 		this.requestedCityName = requestedCityName;
@@ -62,12 +62,13 @@ public class WeatherEntity {
 		
 		this.humidity = humidity;
 
+		this.userName=userName;
 
 	}
 
 	public WeatherEntity( String requestedCityName, String cityName, String country, Integer temperature,
 			List<String> weatherDescriptions, LocalDateTime responseLocalTime,
-			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity) {
+			LocalDateTime updatedTime,List<String> weatherIcons,Integer windSpeed,Integer humidity,String userName) {
 		this.id = "";
 		this.requestedCityName = requestedCityName;
 		this.cityName = cityName;
@@ -78,8 +79,11 @@ public class WeatherEntity {
 		this.weatherDescriptions = weatherDescriptions;
 		this.weatherIcons = weatherIcons;
 		this.windSpeed = windSpeed;
-		
+
 		this.humidity= humidity;
+
+		this.userName=userName;
+
 	}
 
 	public WeatherEntity() {
@@ -176,14 +180,11 @@ public class WeatherEntity {
 	}
 
 
+	public String getUserName() {
+		return userName;
+	}
 
-
-
-
-
-
-
-
-
-
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

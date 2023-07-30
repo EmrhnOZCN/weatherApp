@@ -15,7 +15,7 @@ public interface IAdminService {
 	
 	List<WeatherEntity> getAll();
 	
-	List<RolesEntity> getAllRoles();
+
 	
 	long getUserCount();
 	

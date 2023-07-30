@@ -21,7 +21,7 @@ public class RolesEntity {
 
 	
 	
-	private String userName;
+
 	
     private String role;
     
@@ -41,16 +41,16 @@ public class RolesEntity {
 
 
 
-	public RolesEntity(Long roleId, String userName, String role) {
+	public RolesEntity(Long roleId,  String role) {
 		super();
 		this.roleId = roleId;
-		this.userName = userName;
+
 		this.role = role;
 	}
 	
-	public RolesEntity(String userName, String role) {
+	public RolesEntity( String role) {
 		
-		this.userName = userName;
+
 		this.role = role;
 	}
 
@@ -78,21 +78,6 @@ public class RolesEntity {
 
 
 
-
-
-	public String getUserName() {
-		return userName;
-	}
-
-
-
-
-
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 
 

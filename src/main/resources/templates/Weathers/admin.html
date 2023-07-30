@@ -48,6 +48,7 @@
                     <br />
                     <table>
                         <tr>
+                            <th>Kullanıcı</th>
                             <th>Şehir</th>
                             <th>Ülke</th>
                             <th>Saat</th>
@@ -57,6 +58,7 @@
                             <th>Durum</th>
                         </tr>
                         <tr th:each="weather : ${weather}">
+                            <td th:text="${weather.userName}"></td>
                             <td th:text="${weather.requestedCityName}"></td>
                             <td th:text="${weather.country}"></td>
                             <td th:text="${weather.updatedTime}"></td>

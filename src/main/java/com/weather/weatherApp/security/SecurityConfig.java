@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.weather.weatherApp.constans.CustomAuthenticationSuccessHandler;
 
+
 @Configuration
 public class SecurityConfig {
 	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -28,6 +29,8 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 	// JDBC ile kullanıcı veritabanına erişimi sağlayacak UserDetailsManager'ı yapılandırma
 	@Bean
 	public UserDetailsManager userDetailsManager(DataSource dataSource,PasswordEncoder passwordEncoder) {
@@ -36,8 +39,8 @@ public class SecurityConfig {
 
 		// Kullanıcı adı ve şifre sorgularını belirleme
 		jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT user_name, pw, active FROM members WHERE user_name = ?");
-		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT user_name, role FROM roles WHERE user_name = ?");
-
+		// Bu sorgu, kullanıcının rolünü "members" ve "roles" tablolarından çekmek için kullanılır.
+		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT members.user_name AS username, roles.role FROM members JOIN roles ON members.role_id = roles.role_id WHERE members.user_name = ?");
 
 
 		return jdbcUserDetailsManager;

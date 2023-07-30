@@ -34,7 +34,7 @@ public class WeatherService implements IWeatherService {
     // Eğer veri veritabanında mevcutsa ve belirli bir süreden daha kısa bir süre önce güncellendiyse,
     // mevcut veriyi döndürür. Aksi takdirde güncel hava durumu bilgisini alarak veritabanına kaydeder.
     @Override
-    public WeatherDto getWeatherByCityName(String city) {
+    public WeatherDto getWeatherByCityName(String city,String userName) {
         Optional<WeatherEntity> weatherEntityOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdatedTimeDesc(city);
 
         if (weatherEntityOptional.isPresent()) {
@@ -47,18 +47,18 @@ public class WeatherService implements IWeatherService {
                 System.out.println("Şehir verisi güncel. Mevcut veriyi dönüyorum.");
                 return WeatherDto.convert(weatherEntity);
             } else {
-                return WeatherDto.convert(getWeatherFromWeatherStack(city));
+                return WeatherDto.convert(getWeatherFromWeatherStack(city,userName));
             }
         } else {
-            System.out.println("Veri tabanına kayıt edildi");
-            return WeatherDto.convert(getWeatherFromWeatherStack(city));
+
+            return WeatherDto.convert(getWeatherFromWeatherStack(city,userName));
         }
     }
 
     // Belirli bir şehir için hava durumu bilgisini çekmek için kullanılan metod
     // Bu metod API'den veri çeker ve veritabanına kaydetmek için başka bir metodu çağırır
     @Override
-    public WeatherEntity getWeatherFromWeatherStack(String city) {
+    public WeatherEntity getWeatherFromWeatherStack(String city,String userName) {
         // REST çağrısı yaparak hava durumu bilgisi için API'den yanıt alınır
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(getWeatherStackUrl(city), String.class);
 
@@ -70,7 +70,7 @@ public class WeatherService implements IWeatherService {
             if (weatherResponse.location() == null) {
                 throw new RuntimeException("API'den geçerli bir hava durumu yanıtı alınamadı.");
             } else {
-                return saveWeatherEntity(city, weatherResponse);
+                return saveWeatherEntity(city, weatherResponse,userName);
             }
         } catch (JsonProcessingException e) {
             // Eğer JSON dönüşümü sırasında bir hata oluşursa, hatayı fırlatır ve çağıran yeri bilgilendirir
@@ -81,7 +81,7 @@ public class WeatherService implements IWeatherService {
     // Bu metod, veritabanına hava durumu bilgisini kaydeden bir metottur.
     // API'den alınan hava durumu yanıtını ve ilgili şehir adını alır, bu bilgilerle yeni bir WeatherEntity nesnesi oluşturur ve bunu veritabanına kaydeder.
     @Override
-    public WeatherEntity saveWeatherEntity(String city, WeatherResponse response) {
+    public WeatherEntity saveWeatherEntity(String city, WeatherResponse response,String userName) {
         // Diğer null kontrollerini burada yapabilirsiniz
 
         // Tarih ve saat formatlaması için kullanılacak DateTimeFormatter oluşturulur
@@ -97,7 +97,8 @@ public class WeatherService implements IWeatherService {
                 LocalDateTime.now(),
                 response.current().weatherIcons(),
                 response.current().windSpeed(),
-                response.current().humidity()
+                response.current().humidity(),
+                userName
 
 
 

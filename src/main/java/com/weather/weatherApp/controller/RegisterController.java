@@ -50,7 +50,7 @@ public class RegisterController {
 
 
 
-        RolesEntity rolesEntity = new RolesEntity(email, role);
+        RolesEntity rolesEntity = new RolesEntity(role);
 		MembersEntity membersEntity = new MembersEntity(email,  passwordEncoder.encode(password), true,rolesEntity);
 
         

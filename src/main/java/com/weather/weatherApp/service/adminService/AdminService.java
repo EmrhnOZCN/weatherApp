@@ -40,10 +40,7 @@ public class AdminService implements IAdminService {
 	}
 
 	// Tüm rolleri getirir
-	@Override
-	public List<RolesEntity> getAllRoles() {
-		return rolesRepository.findAll();
-	}
+
 
 	// Kullanıcı sayısını getirir
 	@Override
