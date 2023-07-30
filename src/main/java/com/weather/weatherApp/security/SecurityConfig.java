@@ -5,6 +5,8 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,15 +22,23 @@ public class SecurityConfig {
 		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
 	}
 
+
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	// JDBC ile kullanıcı veritabanına erişimi sağlayacak UserDetailsManager'ı yapılandırma
 	@Bean
-	public UserDetailsManager userDetailsManager(DataSource dataSource) {
+	public UserDetailsManager userDetailsManager(DataSource dataSource,PasswordEncoder passwordEncoder) {
 		// Veritabanı kaynaklarını kullanarak JdbcUserDetailsManager oluşturma
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 
 		// Kullanıcı adı ve şifre sorgularını belirleme
 		jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT user_name, pw, active FROM members WHERE user_name = ?");
 		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT user_name, role FROM roles WHERE user_name = ?");
+
+
 
 		return jdbcUserDetailsManager;
 	}

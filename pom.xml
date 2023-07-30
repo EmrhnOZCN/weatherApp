@@ -36,10 +36,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,12 +55,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+
+
 		<!-- prometheus-->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.micrometer</groupId>-->
+<!--			<artifactId>micrometer-registry-prometheus</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
 		<!-- Db-->
 		<dependency>
     <groupId>org.postgresql</groupId>
@@ -82,11 +85,11 @@
 			<scope>test</scope>
 		</dependency>
 		
-	<dependency>
-    <groupId>org.modelmapper</groupId>
-    <artifactId>modelmapper</artifactId>
-    <version>3.1.1</version>
-		</dependency>
+<!--	<dependency>-->
+<!--    <groupId>org.modelmapper</groupId>-->
+<!--    <artifactId>modelmapper</artifactId>-->
+<!--    <version>3.1.1</version>-->
+<!--		</dependency>-->
 
 	</dependencies>
 	<dependencyManagement>

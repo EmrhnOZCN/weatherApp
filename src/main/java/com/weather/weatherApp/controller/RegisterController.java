@@ -1,5 +1,6 @@
 package com.weather.weatherApp.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,12 @@ public class RegisterController {
 	
 	private IUserService iUserService;
 
-	public RegisterController(IUserService iUserService) {
+	private PasswordEncoder passwordEncoder;
+
+	public RegisterController(IUserService iUserService,PasswordEncoder passwordEncoder) {
 		super();
 		this.iUserService = iUserService;
+		this.passwordEncoder=passwordEncoder;
 	}
 	
 	
@@ -44,8 +48,10 @@ public class RegisterController {
 	@PostMapping("/registerPost")
     public String registerUser(@RequestParam String email, @RequestParam String password, @RequestParam String role) {
 
+
+
         RolesEntity rolesEntity = new RolesEntity(email, role);
-		MembersEntity membersEntity = new MembersEntity(email, "{noop}" + password, true,rolesEntity);
+		MembersEntity membersEntity = new MembersEntity(email,  passwordEncoder.encode(password), true,rolesEntity);
 
         
         
