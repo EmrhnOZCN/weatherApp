@@ -17,7 +17,7 @@ public class MembersEntity {
     
     private boolean active;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
 	private RolesEntity rolesEntity;
 
