@@ -15,8 +15,8 @@
 
 <img src="https://r.resimlink.com/9X4qiRo6wr.png" alt="project-screenshot" width="1920" height="400/">
 
-<img src="https://r.resimlink.com/MwJIDWBuTsb.png" alt="project-screenshot" width="1920" height="400/">
 
-<img src="https://r.resimlink.com/YQl7Je6yi.png" alt="project-screenshot" width="1920" height="400/">(https://r.resimlink.com/x6aMmoNjO.png)
+
+<img src="https://r.resimlink.com/YQl7Je6yi.png" alt="project-screenshot" width="1920" height="400/">
 
 <img src="https://r.resimlink.com/7efh4K9pu.png" alt="project-screenshot" width="1920" height="400/">
