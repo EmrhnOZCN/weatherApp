@@ -45,6 +45,7 @@ public class AdminService implements IAdminService {
 	// Kullanıcı sayısını getirir
 	@Override
 	public long getUserCount() {
+
 		return membersRepository.count();
 	}
 
@@ -64,6 +65,7 @@ public class AdminService implements IAdminService {
 	// Kullanıcıyı siler
 	@Override
 	public void deleteUser(long userId) {
+
 		membersRepository.deleteById(userId);
 	}
 

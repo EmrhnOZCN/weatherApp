@@ -20,7 +20,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         // Kullanıcının rolüne bağlı olarak yönlendirme yapma
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PREMIUM"))) {
-            // Kullanıcının rolü "ROLE_PREMIUM" ise "/weather" yoluna yönlendir
+            // Kullanıcının rolü "ROLE_PREMIUM" ise "/weather" yoluna yönlendirz
             response.sendRedirect("/weather");
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_FREE"))) {
             // Kullanıcının rolü "ROLE_FREE" ise "/weather" yoluna yönlendir

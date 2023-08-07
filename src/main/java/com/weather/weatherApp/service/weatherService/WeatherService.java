@@ -66,8 +66,12 @@ public class WeatherService implements IWeatherService {
             // JSON veriyi hava durumu nesnesine dönüştürür
             WeatherResponse weatherResponse = objectMapper.readValue(responseEntity.getBody(), WeatherResponse.class);
 
+
+
             // Null kontrolü ekleniyor
             if (weatherResponse.location() == null) {
+
+
                 throw new RuntimeException("API'den geçerli bir hava durumu yanıtı alınamadı.");
             } else {
                 return saveWeatherEntity(city, weatherResponse,userName);

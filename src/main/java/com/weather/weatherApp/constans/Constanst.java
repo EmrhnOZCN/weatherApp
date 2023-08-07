@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Constanst {
+public class 	Constanst {
 	// API için sabit değerler
 	public static String API_URL;
 

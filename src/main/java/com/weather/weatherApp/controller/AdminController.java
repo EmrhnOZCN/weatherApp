@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import com.weather.weatherApp.model.MembersEntity;
-import com.weather.weatherApp.model.RolesEntity;
 import com.weather.weatherApp.model.WeatherEntity;
 import com.weather.weatherApp.service.weatherService.IWeatherService;
 import com.weather.weatherApp.service.adminService.IAdminService;
@@ -37,6 +36,8 @@ public class AdminController {
 
 		// En son güncellenen 4 hava durumu kaydını getir
 		List<WeatherEntity> weather = adminService.getAll();
+
+
 
 
 

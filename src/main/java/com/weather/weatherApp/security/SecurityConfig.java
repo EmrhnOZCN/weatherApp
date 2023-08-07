@@ -21,6 +21,7 @@ public class SecurityConfig {
 	// Özel kimlik doğrulama başarı işleyiciyi enjekte eden bir yapılandırıcı
 	public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
 		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+
 	}
 
 
@@ -29,6 +30,8 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 
 
 	// JDBC ile kullanıcı veritabanına erişimi sağlayacak UserDetailsManager'ı yapılandırma

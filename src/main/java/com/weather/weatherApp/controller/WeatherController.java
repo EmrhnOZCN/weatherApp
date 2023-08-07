@@ -35,12 +35,19 @@ public class WeatherController {
     }
 
 	@PostMapping("/weather")
-	public String getWeatherByCityName(@RequestParam("cityName") String cityName, Model model, Authentication authentication) {
+	public String getWeatherByCityName(@RequestParam("cityName") String cityName, Model model, Authentication authentication)
+	{
 		// Authentication nesnesi, kullanıcının kimlik bilgilerini içerir
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
 
 		WeatherDto result = weatherService.getWeatherByCityName(cityName,userDetails.getUsername());
+
+
+
+
+
+
 		// Burada username değişkeni üzerinden kullanıcının kimlik bilgilerini kullanabilirsiniz
 		// Örneğin, bu bilgiyi loglamak, kullanıcıya özgü bir işlem yapmak için kullanabilirsiniz.
 
