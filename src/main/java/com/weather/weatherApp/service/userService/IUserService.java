@@ -9,9 +9,7 @@ import com.weather.weatherApp.model.RolesEntity;
 public interface IUserService {
 	
 	void addMembers(MembersEntity membersEntity);
-	
-
-	
 
 
+    MembersEntity findByUserName(String userName);
 }

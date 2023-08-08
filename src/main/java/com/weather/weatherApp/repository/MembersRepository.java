@@ -6,4 +6,5 @@ import com.weather.weatherApp.model.MembersEntity;
 
 public interface MembersRepository extends JpaRepository<MembersEntity, Long> {
 	long count();
+	MembersEntity findByUserName(String userName);
 }

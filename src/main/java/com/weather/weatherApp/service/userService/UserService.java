@@ -27,8 +27,8 @@ public class UserService implements IUserService {
 		membersRepository.save(membersEntity);
 	}
 
-
-
-
-
+	@Override
+	public MembersEntity findByUserName(String userName) {
+		return membersRepository.findByUserName(userName);
+	}
 }

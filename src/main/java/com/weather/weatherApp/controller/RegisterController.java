@@ -1,5 +1,6 @@
 package com.weather.weatherApp.controller;
 
+import com.weather.weatherApp.exception.DuplicateUserException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
@@ -46,9 +47,16 @@ public class RegisterController {
 	
 	
 	@PostMapping("/registerPost")
-    public String registerUser(@RequestParam String email, @RequestParam String password, @RequestParam String role) {
+    public String registerUser(@RequestParam String email	, @RequestParam String password, @RequestParam String role) {
 
+		MembersEntity existingMember = iUserService.findByUserName(email);
 
+		if (existingMember != null) {
+
+			// Aynı kullanıcı zaten var, hata mesajı döndür veya işlemi durdur
+			throw new DuplicateUserException("Bu e-posta adresi zaten kullanımda!"); // Özel istisna fırlat
+
+		}
 
         RolesEntity rolesEntity = new RolesEntity(role);
 		MembersEntity membersEntity = new MembersEntity(email,  passwordEncoder.encode(password), true,rolesEntity);

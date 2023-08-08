@@ -61,7 +61,7 @@ public class GeneralExceptionAdvice  {
         return "redirect:/weather";
     }
 
-    @ExceptionHandler({RuntimeException.class,})
+    @ExceptionHandler({RuntimeException.class})
     public String handle(RuntimeException runtimeException,RedirectAttributes redirectAttributes){
 
         String errorMessage = "Şehir bilgisi bulunamadı";
@@ -69,6 +69,16 @@ public class GeneralExceptionAdvice  {
 
 
         return "redirect:/weather";
+    }
+
+    @ExceptionHandler(DuplicateUserException.class)
+    public String handleDuplicateUserException(DuplicateUserException ex,RedirectAttributes redirectAttributes) {
+
+        String errorMessage = "E-posta adresi kullanımda";
+
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+
+        return "redirect:/register";
     }
 
 
