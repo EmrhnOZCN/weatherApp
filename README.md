@@ -1,5 +1,7 @@
 
-<h1 align="center" id="title">WeatherApp</h1>
+<h1 align="center" id="title">Weather Application</h1>
+
+<p align="center"><img src="https://r.resimlink.com/lG-smo6_jru.png" alt="project-image"></p>
 
 <h2>🚀 Demo</h2>
 
@@ -21,3 +23,17 @@
 
 
 <img src="https://r.resimlink.com/7efh4K9pu.png" alt="project-screenshot" width="1920" height="400/">
+
+  
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   Java17
+*   Spring Boot 3.0
+*   Spring Data JPA
+*   Spring Security
+*   Spring AOP
+*   PostgreSQL
+*   Maven
+*   Thymeleaf
