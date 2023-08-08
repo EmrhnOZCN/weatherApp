@@ -65,6 +65,7 @@ public class SecurityConfig {
 								.requestMatchers("/register").permitAll()
 								// "/signUp" yoluna herkese açık (yetki gerektirmez) erişim izni verme
 								.requestMatchers("/signUp").permitAll()
+
 								// Diğer tüm istekler için kimlik doğrulama gerekliliğini belirleme
 								.anyRequest().authenticated()
 				)

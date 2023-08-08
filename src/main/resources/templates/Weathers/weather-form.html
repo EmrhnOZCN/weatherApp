@@ -79,12 +79,9 @@
                     </ul>
                 </form>
 
-                <!-- Role bilgisini burada gösterelim -->
-                <div class="text-center" sec:authorize="isAuthenticated()">
-                    <div class="role-display">
-                        Role: <span sec:authentication="principal.authorities"></span>
-                    </div>
-                </div>
+
+
+
 
             </div>
 
@@ -101,6 +98,15 @@
                             <div class="card-body p-4">
                                 <div class="d-flex">
                                     <h6 class="flex-grow-1" th:text="${weather.cityName}"></h6>
+
+                                    <h6 style="margin-right: 80px;" sec:authorize="hasRole('PREMIUM')">
+                                        <!-- Role bilgisini burada gösterelim -->
+                                        <span style="position: absolute; left: 180px;">PREMIUM</span>
+                                    </h6>
+                                    <h6 style="margin-right: 80px;" sec:authorize="hasRole('FREE')">
+                                        <!-- Role bilgisini burada gösterelim -->
+                                        <span style="position: absolute; left: 200px;">FREE</span>
+                                    </h6>
                                     <h6>
                                         <span id="guncelZaman">
                                         </span>
@@ -143,20 +149,48 @@
                                 </div>
                             </div>
                         </div>
+
                         <form action="#" th:action="@{/weather}" method="post" th:object="${weather}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="cityName" th:field="*{cityName}" placeholder="Şehir adını girin"
+                                       style="border-radius: 20px; margin-right: 5px;">
 
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="cityName" th:field="*{cityName}" placeholder="Şehir adını girin"
-                        style="border-radius: 20px; margin-right: 5px;">
-                    <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Hava Durumu Göster</button>
-                    </div>
-                    </form>
+                                <!-- Hata mesajlarını gösteren div -->
 
+
+                                <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Hava Durumu Göster</button>
+
+
+
+
+
+                            </div>
+
+
+                        </form>
+                        <br>
+
+                        <div class="alert alert-danger" th:if="${errorMessage}" id="error-message">
+                            <p th:text="${errorMessage}"></p>
+                        </div>
 
                     </div>
                 </div>
             </div>
         </section>
+    <!-- Hata yakalandığında JavaScript kodunu çalıştır -->
+    <script>
+
+
+        setTimeout(function () {
+        var errorMessage = document.getElementById("error-message");
+        if (errorMessage) {
+            errorMessage.style.display = "none";
+            window.scrollTo(0, 0); // Sayfanın en üstüne kaydır
+        }
+    }, 2000);
+    </script>
+
     </body>
 
     </html>

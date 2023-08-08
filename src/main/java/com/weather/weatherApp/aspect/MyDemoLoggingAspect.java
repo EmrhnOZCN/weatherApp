@@ -19,27 +19,19 @@ public class MyDemoLoggingAspect {
 
     Logger log = Logger.getLogger(getClass().getName());
 
-    @Pointcut("execution(* com.weather.weatherApp.service.*.*(..))")
-    public void forServicePackage(){}
+    @Pointcut("execution(* com.weather.weatherApp..*.*(..))")
+    public void forAppPackage() {}
 
-    @Pointcut("execution(* com.weather.weatherApp.controller.*.*(..))")
-    public void forControllerPackage(){}
+    @Pointcut("execution(* com.weather.weatherApp.aspect..*.*(..))")
+    public void forAspectPackage() {}
 
-    @Pointcut("execution(* com.weather.weatherApp.security.*.*(..))")
-    public void forSecurityPackage(){}
-
-    @Pointcut("forServicePackage() || forControllerPackage() ||forSecurityPackage()")
-    public void forAppFlow(){}
-
-
-
+    @Pointcut("forAppPackage() && !forAspectPackage()")
+    public void forAppFlow() {}
 
     @Before("forAppFlow()")
-    public void logBefor(JoinPoint joinPoint){
-
+    public void logBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().toShortString();
-
-        log.info("===>> in @Before calling method : " + " " + method);
+        log.info("===>> in @Before calling method: " + method);
     }
 
 
