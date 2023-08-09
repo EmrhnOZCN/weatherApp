@@ -1,6 +1,5 @@
 package com.weather.weatherApp.exception;
 
-
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+// Kontroller danışmanı olarak işaretleniyor.
 @ControllerAdvice
 public class GeneralExceptionAdvice  {
 
     private static final Logger logger = LoggerFactory.getLogger(GeneralExceptionAdvice.class);
 
-    // MethodArgumentNotValidException için özel bir işlem
+    // MethodArgumentNotValidException istisnasını ele almak için özel bir işlem
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -48,38 +47,34 @@ public class GeneralExceptionAdvice  {
                 errors.put("general", errorMessage);
             }
         });
-        logger.info(String.format("Api validation error: %s", errors));
+        logger.info(String.format("API validation error: %s", errors));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    // ConstraintViolationException istisnasını ele almak için özel bir işlem
     @ExceptionHandler(ConstraintViolationException.class)
     public String handleConstraintViolationException(ConstraintViolationException ex, RedirectAttributes redirectAttributes) {
         String errorMessage = "Boş bırakmayınız";
         redirectAttributes.addFlashAttribute("errorMessage", errorMessage); // Hata mesajını flash attribute olarak ekleyin
-
-
         return "redirect:/weather";
     }
 
+    // Genel RuntimeException sınıfı için özel bir işlem
     @ExceptionHandler({RuntimeException.class})
-    public String handle(RuntimeException runtimeException,RedirectAttributes redirectAttributes){
-
+    public String handle(RuntimeException runtimeException, RedirectAttributes redirectAttributes){
         String errorMessage = "Şehir bilgisi bulunamadı";
-        redirectAttributes.addFlashAttribute("errorMessage", errorMessage); // Hata mesajını flash attribute olarak ekleyin
-
-
+        // Yönlendirme sırasında geçici veri taşımak için kullanılır.
+        // Bu veri, hedef sayfaya yönlendirildiğinde kullanılabilir.
+        // Özellikle hata mesajları gibi geçici bilgilerin aktarılmasında kullanışlıdır.
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/weather";
     }
 
+    // DuplicateUserException istisnasını ele almak için özel bir işlem
     @ExceptionHandler(DuplicateUserException.class)
-    public String handleDuplicateUserException(DuplicateUserException ex,RedirectAttributes redirectAttributes) {
-
+    public String handleDuplicateUserException(DuplicateUserException ex, RedirectAttributes redirectAttributes) {
         String errorMessage = "E-posta adresi kullanımda";
-
         redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
-
         return "redirect:/register";
     }
-
-
 }

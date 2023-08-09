@@ -14,22 +14,29 @@ public class CityNameValidator implements ConstraintValidator<CityNameConstraint
 
     @Override
     public void initialize(CityNameConstraint constraintAnnotation) {
+        // Bu metodun içeriği boş bırakılmış, çünkü herhangi bir başlangıç işlemi yapmanız gerekmiyor.
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        // Gelen şehir adını düzenlemek ve geçerliliğini kontrol etmek için aşağıdaki adımları takip ediyoruz:
+
+        // Adı alfanumerik karakterlere indirgeyerek özel karakterleri kaldırıyoruz.
         value = value.replaceAll("[^a-zA-Z0-9]", "");
+
+        // Şehir adının sadece sayısal olmadığını ve boş olmadığını kontrol ediyoruz.
         boolean isValid = !StringUtils.isNumeric(value) && !StringUtils.isBlank(value);
 
         if (!isValid) {
+            // Eğer geçerli bir şehir adı değilse, kısıtlama ihlali bildirimi oluşturuyoruz.
+            context.buildConstraintViolationWithTemplate("City name is not valid: " + value).addConstraintViolation();
 
-
-
-
-            context.buildConstraintViolationWithTemplate(value).addConstraintViolation();
-            logger.info("The city parameter is not valid. value:" + value);
+            // Ayrıca loga da bu durumu kaydediyoruz.
+            logger.info("The city parameter is not valid. value: " + value);
         }
-        return !StringUtils.isNumeric(value) && !StringUtils.isBlank(value);
+
+        // Sonuç olarak, şehir adının hem sayısal hem de boş olmadığı durumları kontrol ederek sonucu dönüyoruz.
+        return isValid;
     }
 }
