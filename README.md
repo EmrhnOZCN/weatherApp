@@ -33,6 +33,7 @@ Technologies used in the project:
 *   Spring Boot 3.0
 *   Spring Data JPA
 *   Spring Security
+*   Spring MVC
 *   Spring AOP
 *   PostgreSQL
 *   Maven
