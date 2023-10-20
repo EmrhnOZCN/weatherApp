@@ -1,7 +1,7 @@
 
 <h1 align="center" id="title">Weather Application</h1>
 
-<p align="center"><img src="https://r.resimlink.com/lG-smo6_jru.png" alt="project-image"></p>
+<a href="https://resimlink.com/aEe9RXW7uw5f" title="ResimLink - Resim Yükle"><img src="https://r.resimlink.com/aEe9RXW7uw5f.png" title="ResimLink - Resim Yükle" alt="ResimLink - Resim Yükle"></a>
 
 <h2>💻 Built with</h2>
 
