@@ -1,5 +1,6 @@
 package com.weather.weatherApp.exception;
 
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -76,5 +77,13 @@ public class GeneralExceptionAdvice  {
         String errorMessage = "E-posta adresi kullanımda";
         redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/register";
+    }
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    public String handleLimit(RequestNotPermitted requestNotPermitted,RedirectAttributes redirectAttributes){
+
+        String errorMessage = "Sorgu limitine ulaştınız, lütfen 10dk bekleyiniz";
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+        return "redirect:/weather";
     }
 }

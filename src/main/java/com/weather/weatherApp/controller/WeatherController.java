@@ -1,6 +1,7 @@
 package com.weather.weatherApp.controller;
 
 import com.weather.weatherApp.validation.CityNameConstraint;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -39,6 +40,7 @@ public class WeatherController {
     }
 
 	@PostMapping("/weather")
+	@RateLimiter(name = "basic")
 	public String getWeatherByCityName(RuntimeException runtimeException,@RequestParam("cityName") @CityNameConstraint String cityName, Model model, Authentication authentication)
 	{
 		// Authentication nesnesi, kullanıcının kimlik bilgilerini içerir
